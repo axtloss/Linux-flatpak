@@ -1,0 +1,27 @@
+app-id: org.kernel.Linux
+runtime: org.freedesktop.Platform
+runtime-version: 21.08
+sdk: org.freedesktop.Sdk
+command: linux-run
+finish-args:
+  - --filesystem=~/kernel
+  - --socket=session-bus
+  - --filesystem=/boot
+  - --filesystem=/lib
+
+modules:
+  - name: linux
+    buildsystem: simple
+    sources:
+      - type: archive
+        path: ./linux.tar
+        dest: ./kernel
+      - type: file
+        path: ./linux
+      - type: file
+        path: ./linux-run
+    build-commands:
+      - mkdir -p /app/kernels
+      - install -Dm755 ./linux /app/bin/linux
+      - install -Dm755 ./linux-run /app/bin/linux-run
+      - cp -r ./kernel /app/kernels/linux-5.18.2

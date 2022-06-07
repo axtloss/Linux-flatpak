@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+set -x
+mkdir -p ~/kernel
+cp /app/bin/linux ~/kernel/linux-setup
+cp -r /app/kernels/linux-5.18.2 ~/kernel/linux-5.18.2
+cd ~
+HOME=$(pwd)
+flatpak-spawn --host pkexec $HOME/kernel/linux-setup $HOME
