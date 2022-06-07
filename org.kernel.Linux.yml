@@ -4,7 +4,7 @@ runtime-version: 21.08
 sdk: org.freedesktop.Sdk
 command: linux-run
 finish-args:
-  - --filesystem=~/kernel
+  - --filesystem=home
   - --socket=session-bus
   - --filesystem=/boot
   - --filesystem=/lib
