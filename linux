@@ -1,13 +1,13 @@
 #!/usr/bin/bash
 set -x
 
-cd $1/kernel/linux-5.18.2/x86
+cd $1/kernel/linux-$2/x86
 echo $(pwd)
 INSTALL_PATH=/boot
 LINK_PATH=/boot
 RELATIVE_PATH=`echo "$INSTALL_PATH/" | sed "s|^$LINK_PATH/||"`
 KERNEL_NAME=vmlinuz
-KERNEL_VERSION=5.18.2
+KERNEL_VERSION=$2
 BOOTIMAGE=boot/bzImage
 MAPFILE=System.map
 ARCH=$(uname -m)
@@ -45,6 +45,18 @@ ln -fs ${RELATIVE_PATH}$INSTALL_PATH/System.map-$KERNEL_VERSION $LINK_PATH/Syste
 
 echo "INSTALLED KERNEL: $KERNEL_NAME-$KERNEL_VERSION CONTINUING WITH MODULES"
 
-cd $1/kernel/linux-5.18.2/
+cd $1/kernel/linux-$KERNEL_VERSION/
 
 cp -r $KERNEL_VERSION /lib/modules/.
+
+echo "INSTALLED KERNEL MODULES, CONTINUING WITH INITRAMFS"
+
+cp initramfs /boot/initramfs-$KERNEL_VERSION.img
+
+if [ ! -f ./initramfs-fallback ]; then
+    echo "NO INITRAMFS-FALLBACK FOUND, USING DEFAULT"
+    cp initramfs /boot/initramfs-$KERNEL_VERSION-fallback.img
+else
+    echo "FOUND INITRAMFS-FALLBACK, USING IT"
+    cp initramfs-fallback /boot/initramfs-$KERNEL_VERSION-fallback.img
+fi

@@ -1,8 +1,9 @@
 #!/usr/bin/bash
 set -x
+KERNEL_VERSION=5.18.2
 mkdir -p ~/kernel
 cp /app/bin/linux ~/kernel/linux-setup
-cp -r /app/kernels/linux-5.18.2 ~/kernel/linux-5.18.2
+cp -r /app/kernel/linux-$KERNEL_VERSION ~/kernel/linux-$KERNEL_VERSION
 cd ~
 HOME=$(pwd)
-flatpak-spawn --host pkexec $HOME/kernel/linux-setup $HOME
+flatpak-spawn --host pkexec $HOME/kernel/linux-setup $HOME $KERNEL_VERSION
