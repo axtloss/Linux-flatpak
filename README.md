@@ -46,6 +46,17 @@ cd ..
 tar -cvf linux.tar linux-packaged/
 ```
 
+---
+Regardles of the method used, you should end up with a tarball that has this file structure:
+```
+.
+├── <kernel-version>
+│   └── <module stuff>
+├── initramfs
+├── System.map
+└── x86
+    └── <kernel stuff>
+```
 
 If you used arch in a vm to build the kernel tarball you can use [magic-wormhole](https://github.com/magic-wormhole/magic-wormhole) to transfer the file to the actual machine you want to "flatpakboot"
 Then copy the generated `linux.tar` in the same directory of the other files and run the flatpak build command:
