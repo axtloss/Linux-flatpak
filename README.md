@@ -10,6 +10,19 @@ __this is still in deveploment, use it at your own risk!__
 Currently the linux tarball used can only be built on arch system due to the `mkinitcpio` tool that is only available on arch(-based) distros
 first you have to build the kernel, to do that download the kernel source of the version you want to build and extract it and configure the kernel to what you want it to be, in my experience the arch default config worked the best and will be used in this guide.
 
+### The automated way
+install the dependencies with
+```bash
+sudo pacman -S base-devel wget
+```
+then download the kernel source, preferrably from https://kernel.org, extract the tarball and apply any patches if you need any
+
+then, if you want, generate a custom kernel configuration or get a premade one, if none is made then the default arch configuration will be used
+
+then just run `build-linux-tarball.sh /path/to/extracted/tarball <kernel-version> [path to custom kernel configuration]`
+
+### The manual way
+
 ```bash
 wget https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.18.2.tar.xz #we grab the kernel source of linux-5.18.2 from kernel.org
 tar -xvf linux-5.18.2.tar.xz # extracting the kernel tarball
@@ -32,6 +45,8 @@ mkinitcpio -p 5.18.2 ./initramfs --kernelimage ./x86/boot/bzImage # generating t
 cd ..
 tar -cvf linux.tar linux-packaged/
 ```
+
+
 If you used arch in a vm to build the kernel tarball you can use [magic-wormhole](https://github.com/magic-wormhole/magic-wormhole) to transfer the file to the actual machine you want to "flatpakboot"
 Then copy the generated `linux.tar` in the same directory of the other files and run the flatpak build command:
 `flatpak-builder --user --install --force-clean build-dir org.kernel.Linux.yml`
