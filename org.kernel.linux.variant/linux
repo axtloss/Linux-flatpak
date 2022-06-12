@@ -1,0 +1,62 @@
+#!/usr/bin/bash
+set -x
+
+cd $1/kernel/linux-$2/x86
+echo $(pwd)
+INSTALL_PATH=/boot
+LINK_PATH=/boot
+RELATIVE_PATH=`echo "$INSTALL_PATH/" | sed "s|^$LINK_PATH/||"`
+KERNEL_NAME=vmlinuz
+KERNEL_VERSION=$2
+BOOTIMAGE=boot/bzImage
+MAPFILE=System.map
+ARCH=$(uname -m)
+
+if [ -f $INSTALL_PATH/$KERNEL_NAME-$KERNEL_VERSION ]; then
+    mv $INSTALL_PATH/$KERNEL_NAME-$KERNEL_VERSION \
+        $INSTALL_PATH/$KERNEL_NAME-$KERNEL_VERSION.old;
+fi
+
+if [ ! -L $INSTALL_PATH/$KERNEL_NAME ]; then
+    if [ -e $INSTALLPATH/$KERNEL_NAME ]; then
+	mv $INSTALL_PATH/$KERNEL_NAME $INSTALL_PATH/$KERNEL_NAME.old
+    fi
+fi
+
+if [ -f $INSTALL_PATH/System.map-$KERNEL_VERSION ]; then
+    mv $INSTALL_PATH/System.map-$KERNEL_VERSION \
+        $INSTALL_PATH/System.map-$KERNEL_VERSION.old;
+fi
+
+if [ ! -L $INSTALL_PATH/System.map ]; then
+    if [ -e $INSTALLPATH/System.map ]; then
+	mv $INSTALL_PATH/System.map $INSTALL_PATH/System.map.old
+    fi
+fi
+
+ln -sf ${RELATIVE_PATH}$INSTALL_PATH/System.map-$KERNEL_VERSION $LINK_PATH/System.map
+
+cat $BOOTIMAGE > $INSTALL_PATH/$KERNEL_NAME-$KERNEL_VERSION
+
+cp $MAPFILE $INSTALL_PATH/System.map-$KERNEL_VERSION
+
+ln -fs ${RELATIVE_PATH}$INSTALL_PATH/$KERNEL_NAME-$KERNEL_VERSION $LINK_PATH/$KERNEL_NAME
+ln -fs ${RELATIVE_PATH}$INSTALL_PATH/System.map-$KERNEL_VERSION $LINK_PATH/System.map
+
+echo "INSTALLED KERNEL: $KERNEL_NAME-$KERNEL_VERSION CONTINUING WITH MODULES"
+
+cd $1/kernel/linux-$KERNEL_VERSION/
+
+cp -r $KERNEL_VERSION /lib/modules/.
+
+echo "INSTALLED KERNEL MODULES, CONTINUING WITH INITRAMFS"
+
+cp initramfs /boot/initramfs-$KERNEL_VERSION.img
+
+if [ ! -f ./initramfs-fallback ]; then
+    echo "NO INITRAMFS-FALLBACK FOUND, USING DEFAULT"
+    cp initramfs /boot/initramfs-$KERNEL_VERSION-fallback.img
+else
+    echo "FOUND INITRAMFS-FALLBACK, USING IT"
+    cp initramfs-fallback /boot/initramfs-$KERNEL_VERSION-fallback.img
+fi

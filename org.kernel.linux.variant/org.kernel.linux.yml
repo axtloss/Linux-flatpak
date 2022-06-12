@@ -1,0 +1,22 @@
+id: org.kernel.linux.variant.stable-5-18-2
+branch: '5.18.2'
+runtime: org.kernel.Linux
+sdk: org.freedesktop.Sdk//21.08
+build-extension: true
+appstream-compose: false
+modules:
+  - name: kernel
+    buildsystem: simple
+    sources:
+      - type: archive
+        path: ./linux.tar
+        dest: ./kernel
+      - type: file
+        path: ./linux
+    build-commands:
+      - ls /app/bin
+      - ls /app/lib/kernels
+      - install -Dm755 ./linux /app/lib/kernels/stable-5-18-2/linux
+     # - install -Dm755 ./linux-run /app/lib/kernels/linux-5.18.2/linux-run
+      - ls /app/lib/kernels/stable-5-18-2
+      - cp -r ./kernel /app/lib/kernels/stable-5-18-2/kernel

@@ -9,6 +9,13 @@ finish-args:
   - --filesystem=/boot
   - --filesystem=/lib
 
+add-extensions:
+  org.kernel.linux.variant:
+    directory: lib/kernels
+    subdirectories: true
+    no-autodownload: false
+    autodelete: false
+
 modules:
   - name: linux
     buildsystem: simple
@@ -21,6 +28,7 @@ modules:
       - type: file
         path: ./linux-run
     build-commands:
+      - mkdir -p /app/lib/kernels
       - mkdir -p /app/kernel
       - install -Dm755 ./linux /app/bin/linux
       - install -Dm755 ./linux-run /app/bin/linux-run
