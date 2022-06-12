@@ -1,4 +1,5 @@
-# Linux-flatpak
+# Linux-flatpak <img src="https://github.com/axtloss/Linux-flatpak/blob/main/linux-flatpak.png?raw=true" height=30 width=30>
+<img src="https://github.com/axtloss/Linux-flatpak/blob/main/linux-flatpak.png?raw=true" height=100 width=100>
 packaging the linux kernel as a flatpak, just because
 
 https://user-images.githubusercontent.com/60044824/172443953-37a01a4a-66d8-47af-a25f-45c811abf797.mp4
