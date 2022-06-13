@@ -1,0 +1,25 @@
+app-id: org.gnu.coreutils
+runtime: org.freedesktop.Platform
+runtime-version: '21.08'
+sdk: org.freedesktop.Sdk
+finish-args:
+  - --filesystem=host
+command: coreutil-run
+
+
+modules:
+  - name: coreutils
+    buildsystem: simple
+    sources:
+      - type: archive
+        path: ./coreutils-9.1.tar.xz
+        dest: ./coreutils
+      - type: file
+        path: ./coreutil-run
+    build-commands:
+      - ls coreutils
+      - cd coreutils && ./configure --prefix=/app --libexecdir=/app/lib
+      - cd coreutils && make 
+      - ls coreutils
+      - cd coreutils && make install
+      - install -Dm755 ./coreutil-run /app/bin/coreutil-run

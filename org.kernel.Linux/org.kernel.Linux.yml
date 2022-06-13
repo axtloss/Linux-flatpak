@@ -11,6 +11,7 @@ finish-args:
 
 add-extensions:
   org.kernel.linux.variant:
+    version: '5.18.2'
     directory: lib/kernels
     subdirectories: true
     no-autodownload: false

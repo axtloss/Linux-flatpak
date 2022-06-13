@@ -17,6 +17,6 @@ modules:
       - ls /app/bin
       - ls /app/lib/kernels
       - install -Dm755 ./linux /app/lib/kernels/stable-5-18-2/linux
-     # - install -Dm755 ./linux-run /app/lib/kernels/linux-5.18.2/linux-run
+      # - install -Dm755 ./linux-run /app/lib/kernels/linux-5.18.2/linux-run
       - ls /app/lib/kernels/stable-5-18-2
       - cp -r ./kernel /app/lib/kernels/stable-5-18-2/kernel
