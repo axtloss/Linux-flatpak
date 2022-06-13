@@ -1,6 +1,6 @@
 # Linux-flatpak <img src="https://github.com/axtloss/Linux-flatpak/blob/main/linux-flatpak.png?raw=true" height=30 width=30>
 <img src="https://github.com/axtloss/Linux-flatpak/blob/main/linux-flatpak.png?raw=true" height=100 width=100>
-packaging the linux kernel as a flatpak, just because
+packaging ~~the linux kernel~~ linux stuff as a flatpak, just because
 
 https://user-images.githubusercontent.com/60044824/172443953-37a01a4a-66d8-47af-a25f-45c811abf797.mp4
 
@@ -68,4 +68,5 @@ once that's finished you can just execute `flatpak run org.kernel.Linux` and it 
 After that's done you'll just have to modify your bootloader to recognize the new kernel and initramfs
 
 # why
-Honestly, no idea, I was very bored and had nothing better to do.
+1) Honestly, no idea, I was very bored and had nothing better to do.
+2) I want to be able to only have some base stuff and flatpak installed through the system package manager, the rest as a flatpak. For example during the arch installation process I want to do `pacstrap flatpak base` and nothing else, then install everything else using flatpak.
