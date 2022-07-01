@@ -66,6 +66,7 @@ Then copy the generated `linux.tar` in the same directory of the other files and
 once that's finished you can just execute `flatpak run org.kernel.Linux` and it will copy everything to the right directories.
 
 After that's done you'll just have to modify your bootloader to recognize the new kernel and initramfs
+You can also use the [flatpak version of rEFInd](https://github.com/axtloss/flatpaks/tree/main/com.rodsbooks.refind) that I've made (can't fully guarantee that it'll work tho)
 
 # why
 1) Honestly, no idea, I was very bored and had nothing better to do.
